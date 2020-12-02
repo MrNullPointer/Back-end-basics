@@ -1,10 +1,25 @@
 //jshint esversion:6
+//install bodyParser npm package
 
 const express = require("express");
+//install bodyParser npm package
+const bodyParser = require("body-parser");
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
-  res.send("Hello World!");
+  res.sendFile(__dirname + "/index.html"); //to send an entire webpage (index.html)
+});
+
+//handle post requests that come to our home route through index.html
+
+app.post("/", function (req, res) {
+  var num1 = Number(req.body.num1);
+  var num2 = Number(req.body.num2);
+
+  var result = num1 + num2;
+
+  res.send("The result of calculation is: " + result);
 });
 
 app.listen(3000, function () {
